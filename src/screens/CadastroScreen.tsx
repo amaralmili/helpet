@@ -36,11 +36,12 @@ export function CadastroScreen({ navigation, route }: Props) {
 
   async function carregarDadosDoPet() {
     try {
-      const pet = await db.getFirstAsync<Pet>(
+      const resultado = await db.getAllAsync<Pet>(
         "SELECT * FROM pets WHERE id = ?;",
         [idParaEditar],
       );
-      if (pet) {
+      if (resultado.length > 0) {
+        const pet = resultado[0];
         setTitulo(pet.titulo);
         setDescricao(pet.descricao);
         setFotoUri(pet.fotoUri || "");
@@ -51,7 +52,6 @@ export function CadastroScreen({ navigation, route }: Props) {
       Alert.alert("Erro", "Não foi possível carregar os dados do animal.");
     }
   }
-
   async function capturarHardware() {
     const { status: camStatus } =
       await ImagePicker.requestCameraPermissionsAsync();
@@ -79,17 +79,11 @@ export function CadastroScreen({ navigation, route }: Props) {
 
   async function salvar() {
     if (fotoUri === "") {
-      Alert.alert(
-        "Foto Obrigatória",
-        "Por favor, tire uma foto do animal antes de salvar.",
-      );
+      Alert.alert("Por favor, tire uma foto do animal antes de salvar.");
       return;
     }
     if (titulo.trim() === "" || descricao.trim() === "") {
-      Alert.alert(
-        "Campos Obrigatórios",
-        "Por favor, preencha o título e a descrição.",
-      );
+      Alert.alert("Por favor, preencha o título e a descrição.");
       return;
     }
     try {
