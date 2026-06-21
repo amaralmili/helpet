@@ -51,7 +51,7 @@ export function HomeScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <BotaoPrimario
-        titulo="Registrar Avistamento / Perda"
+        titulo="Registrar Animal"
         onPress={() => navigation.navigate("Cadastro")}
       />
       <FlatList

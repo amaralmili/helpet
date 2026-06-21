@@ -78,11 +78,20 @@ export function CadastroScreen({ navigation, route }: Props) {
   }
 
   async function salvar() {
-    if (titulo.trim() === "" || descricao.trim() === "") {
-      Alert.alert("Erro", "Por favor, preencha o título e a descrição.");
+    if (fotoUri === "") {
+      Alert.alert(
+        "Foto Obrigatória",
+        "Por favor, tire uma foto do animal antes de salvar.",
+      );
       return;
     }
-
+    if (titulo.trim() === "" || descricao.trim() === "") {
+      Alert.alert(
+        "Campos Obrigatórios",
+        "Por favor, preencha o título e a descrição.",
+      );
+      return;
+    }
     try {
       if (idParaEditar) {
         await atualizarPet(db, idParaEditar, {
@@ -103,6 +112,7 @@ export function CadastroScreen({ navigation, route }: Props) {
         });
         Alert.alert("Sucesso", "Animal registado com sucesso!");
       }
+
       navigation.goBack();
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao guardar os dados.");
@@ -143,11 +153,7 @@ export function CadastroScreen({ navigation, route }: Props) {
       <View style={{ marginTop: 20 }}>
         {}
         <BotaoPrimario
-          titulo={
-            idParaEditar
-              ? "Guardar Alterações"
-              : "Registar Novo Avistamento/Perda"
-          }
+          titulo={idParaEditar ? "Guardar Alterações" : "Registar Animal"}
           onPress={salvar}
         />
       </View>
