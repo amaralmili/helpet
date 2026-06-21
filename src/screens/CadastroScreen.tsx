@@ -12,7 +12,6 @@ import { useSQLiteContext } from "expo-sqlite";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
-
 import { inserirPet, atualizarPet } from "../repositories/petRepository";
 import { BotaoPrimario } from "../components/BotaoPrimario";
 import { RootStackParamList } from "../../App";
