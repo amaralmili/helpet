@@ -114,40 +114,59 @@ export function CadastroScreen({ navigation, route }: Props) {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.label}>Animal / Raça / Cor</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Ex: Cão Poodle Branco"
-        value={titulo}
-        onChangeText={setTitulo}
-      />
-      <Text style={styles.label}>Informações Adicionais</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Ex: Visto perto do parque, usava coleira azul..."
-        value={descricao}
-        onChangeText={setDescricao}
-        multiline
-        numberOfLines={3}
-      />
-      <BotaoPrimario
-        titulo="Tirar Foto + Capturar Localização"
-        onPress={capturarHardware}
-      />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>
+          {idParaEditar ? "Editar Animal" : "Registar Novo Animal"}
+        </Text>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.label}> Animal / Raça / Cor</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Ex: Cão Poodle Branco"
+          value={titulo}
+          onChangeText={setTitulo}
+          placeholderTextColor="#cbd5e1"
+        />
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.label}>Informações Adicionais</Text>
+        <TextInput
+          style={[styles.input, styles.inputMultiline]}
+          placeholder="Ex: Visto perto do parque, usava coleira azul..."
+          value={descricao}
+          onChangeText={setDescricao}
+          multiline
+          numberOfLines={4}
+          placeholderTextColor="#cbd5e1"
+        />
+      </View>
+
+      <View style={styles.section}>
+        <BotaoPrimario
+          titulo="Tirar Foto + Localização"
+          onPress={capturarHardware}
+        />
+      </View>
+
       {fotoUri !== "" && (
         <View style={styles.hardwareContainer}>
           <Image source={{ uri: fotoUri }} style={styles.foto} />
-          <Text style={styles.gpsTexto}>
-            Lat: {latitude.toFixed(4)} | Lng: {longitude.toFixed(4)}
-          </Text>
+          <View style={styles.gpsInfo}>
+            <Text style={styles.gpsLabel}>Localização capturada:</Text>
+            <Text style={styles.gpsTexto}>
+              📍 {latitude.toFixed(4)}, {longitude.toFixed(4)}
+            </Text>
+          </View>
         </View>
       )}
 
-      <View style={{ marginTop: 20 }}>
-        {}
+      <View style={styles.buttonSection}>
         <BotaoPrimario
-          titulo={idParaEditar ? "Guardar Alterações" : "Registar Animal"}
+          titulo={idParaEditar ? "Guardar Alterações" : " Registar Animal"}
           onPress={salvar}
         />
       </View>
@@ -156,24 +175,75 @@ export function CadastroScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#f8fafc" },
-  label: { fontSize: 16, fontWeight: "bold", color: "#333", marginBottom: 5 },
+  container: { flex: 1, backgroundColor: "#f0f4f8", paddingHorizontal: 16 },
+  header: {
+    paddingVertical: 20,
+    marginBottom: 24,
+  },
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: "800",
+    color: "#1e293b",
+    letterSpacing: 0.3,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#1e293b",
+    marginBottom: 10,
+    letterSpacing: 0.3,
+  },
   input: {
     backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#cbd5e1",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 15,
-    fontSize: 16,
+    borderWidth: 1.5,
+    borderColor: "#e2e8f0",
+    borderRadius: 12,
+    padding: 14,
+    fontSize: 15,
+    color: "#1e293b",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+  },
+  inputMultiline: {
+    textAlignVertical: "top",
+    paddingTop: 14,
   },
   hardwareContainer: {
-    alignItems: "center",
-    marginVertical: 15,
-    backgroundColor: "#f1f5f9",
-    padding: 10,
-    borderRadius: 8,
+    marginVertical: 20,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 16,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderLeftWidth: 5,
+    borderLeftColor: "#22c55e",
   },
-  foto: { width: "100%", height: 200, borderRadius: 8 },
-  gpsTexto: { marginTop: 8, color: "#64748b", fontWeight: "500" },
+  foto: { width: "100%", height: 240, borderRadius: 12 },
+  gpsInfo: {
+    marginTop: 14,
+  },
+  gpsLabel: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#64748b",
+    marginBottom: 6,
+  },
+  gpsTexto: {
+    fontSize: 14,
+    color: "#22c55e",
+    fontWeight: "700",
+  },
+  buttonSection: {
+    marginVertical: 20,
+    marginBottom: 30,
+  },
 });

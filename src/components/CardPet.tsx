@@ -26,7 +26,7 @@ export function CardPet({ pet, onEditar, onRemover, onMudarStatus }: Props) {
             isEncontrado ? styles.badgeVerde : styles.badgeVermelho,
           ]}
         >
-          {isEncontrado ? "encontrado" : "perdido"}
+          {isEncontrado ? "Encontrado" : "Perdido"}
         </Text>
         <Text style={styles.descricao}>{pet.descricao}</Text>
         <Text style={styles.gps}>
@@ -50,34 +50,48 @@ export function CardPet({ pet, onEditar, onRemover, onMudarStatus }: Props) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 15,
-    elevation: 3,
-    borderWidth: 2,
-    borderColor: "#ef4444",
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    borderLeftWidth: 5,
+    borderLeftColor: "#ef4444",
   },
-  cardEncontrado: { borderColor: "#22c55e", opacity: 0.85 },
-  foto: { width: "100%", height: 200, borderRadius: 8, marginBottom: 10 },
-  infoContainer: { marginBottom: 10 },
-  titulo: { fontSize: 20, fontWeight: "bold", color: "#333" },
+  cardEncontrado: { borderLeftColor: "#22c55e", opacity: 0.95 },
+  foto: { width: "100%", height: 220, borderRadius: 12, marginBottom: 14 },
+  infoContainer: { marginBottom: 14 },
+  titulo: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#1e293b",
+    letterSpacing: 0.3,
+  },
   badge: {
     alignSelf: "flex-start",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
     color: "#fff",
-    fontSize: 12,
-    fontWeight: "bold",
-    marginVertical: 6,
+    fontSize: 13,
+    fontWeight: "700",
+    marginVertical: 10,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   },
   badgeVermelho: { backgroundColor: "#ef4444" },
   badgeVerde: { backgroundColor: "#22c55e" },
-  descricao: { fontSize: 14, color: "#666" },
-  gps: { fontSize: 12, color: "#999", marginTop: 6 },
+  descricao: { fontSize: 15, color: "#475569", lineHeight: 22 },
+  gps: { fontSize: 13, color: "#94a3b8", marginTop: 10, fontWeight: "500" },
   botoesContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
+    gap: 10,
+    marginTop: 14,
   },
 });
