@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <SQLiteProvider databaseName="helppet.db" onInit={inicializarBanco}>
+    <SQLiteProvider databaseName="helppet_v2.db" onInit={inicializarBanco}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen

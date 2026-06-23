@@ -10,13 +10,14 @@ export async function inserirPet(
   pet: Omit<Pet, "id" | "status">,
 ): Promise<void> {
   await db.runAsync(
-    "INSERT INTO pets (titulo, descricao, fotoUri, latitude, longitude, status) VALUES (?, ?, ?, ?, ?, ?);",
+    "INSERT INTO pets (titulo, descricao, fotoUri, latitude, longitude, endereco, status) VALUES (?, ?, ?, ?, ?, ?, ?);",
     [
       pet.titulo,
       pet.descricao,
       pet.fotoUri,
       pet.latitude,
       pet.longitude,
+      pet.endereco || "",
       "perdido",
     ],
   );
@@ -28,8 +29,16 @@ export async function atualizarPet(
   pet: Omit<Pet, "id" | "status">,
 ): Promise<void> {
   await db.runAsync(
-    "UPDATE pets SET titulo = ?, descricao = ?, fotoUri = ?, latitude = ?, longitude = ? WHERE id = ?;",
-    [pet.titulo, pet.descricao, pet.fotoUri, pet.latitude, pet.longitude, id],
+    "UPDATE pets SET titulo = ?, descricao = ?, fotoUri = ?, latitude = ?, longitude = ?, endereco = ? WHERE id = ?;",
+    [
+      pet.titulo,
+      pet.descricao,
+      pet.fotoUri,
+      pet.latitude,
+      pet.longitude,
+      pet.endereco || "",
+      id,
+    ],
   );
 }
 

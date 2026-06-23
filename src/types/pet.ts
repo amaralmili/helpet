@@ -5,5 +5,6 @@ export type Pet = {
   fotoUri: string;
   latitude: number;
   longitude: number;
+  endereco?: string;
   status: "perdido" | "encontrado";
 };

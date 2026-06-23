@@ -9,6 +9,7 @@ export async function inicializarBanco(db: SQLiteDatabase) {
       fotoUri TEXT,
       latitude REAL,
       longitude REAL,
+      endereco TEXT,
       status TEXT DEFAULT 'perdido'
     );
   `);

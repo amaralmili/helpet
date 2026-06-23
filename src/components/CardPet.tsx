@@ -30,7 +30,11 @@ export function CardPet({ pet, onEditar, onRemover, onMudarStatus }: Props) {
         </Text>
         <Text style={styles.descricao}>{pet.descricao}</Text>
         <Text style={styles.gps}>
-          Lat: {pet.latitude.toFixed(4)} | Lng: {pet.longitude.toFixed(4)}
+          <Text style={styles.gps}>
+            📍{" "}
+            {pet.endereco ||
+              `Lat: ${pet.latitude.toFixed(4)} | Lng: ${pet.longitude.toFixed(4)}`}
+          </Text>
         </Text>
       </View>
 

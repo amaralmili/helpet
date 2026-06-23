@@ -27,6 +27,7 @@ export function CadastroScreen({ navigation, route }: Props) {
   const [fotoUri, setFotoUri] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [endereco, setEndereco] = useState("");
 
   useEffect(() => {
     if (idParaEditar) {
@@ -47,6 +48,7 @@ export function CadastroScreen({ navigation, route }: Props) {
         setFotoUri(pet.fotoUri || "");
         setLatitude(pet.latitude || 0);
         setLongitude(pet.longitude || 0);
+        setEndereco(pet.endereco || "");
       }
     } catch (error) {
       Alert.alert("Erro", "Não foi possível carregar os dados do animal.");
@@ -75,6 +77,27 @@ export function CadastroScreen({ navigation, route }: Props) {
     setFotoUri(foto.assets[0].uri);
     setLatitude(loc.coords.latitude);
     setLongitude(loc.coords.longitude);
+
+    try {
+      const geocode = await Location.reverseGeocodeAsync({
+        latitude: loc.coords.latitude,
+        longitude: loc.coords.longitude,
+      });
+
+      if (geocode.length > 0) {
+        const local = geocode[0];
+        const rua = local.street || "Rua desconhecida";
+        const numero = local.streetNumber ? `, ${local.streetNumber}` : "";
+        const bairro = local.district ? ` - ${local.district}` : "";
+        const cidade = local.subregion || local.city || "Cidade desconhecida";
+
+        const enderecoFormatado = `${rua}${numero}${bairro}, ${cidade}`;
+        setEndereco(enderecoFormatado);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar o endereço:", error);
+      setEndereco("Endereço não disponível");
+    }
   }
 
   async function salvar() {
@@ -94,6 +117,7 @@ export function CadastroScreen({ navigation, route }: Props) {
           fotoUri,
           latitude,
           longitude,
+          endereco,
         });
         Alert.alert("Sucesso", "Informações do animal atualizadas!");
       } else {
@@ -103,6 +127,7 @@ export function CadastroScreen({ navigation, route }: Props) {
           fotoUri,
           latitude,
           longitude,
+          endereco,
         });
         Alert.alert("Sucesso", "Animal registado com sucesso!");
       }
@@ -157,9 +182,13 @@ export function CadastroScreen({ navigation, route }: Props) {
           <Image source={{ uri: fotoUri }} style={styles.foto} />
           <View style={styles.gpsInfo}>
             <Text style={styles.gpsLabel}>Localização capturada:</Text>
-            <Text style={styles.gpsTexto}>
-              📍 {latitude.toFixed(4)}, {longitude.toFixed(4)}
-            </Text>
+            {endereco !== "" ? (
+              <Text style={styles.gpsTexto}>📍 {endereco}</Text>
+            ) : (
+              <Text style={styles.gpsTexto}>
+                📍 {latitude.toFixed(4)}, {longitude.toFixed(4)}
+              </Text>
+            )}
           </View>
         </View>
       )}
